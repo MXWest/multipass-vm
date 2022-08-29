@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+prog="$(basename $0)"
+
+show_help() {
+  cat <<-EOF >&2
+    Usage: ${prog} [launch|start|stop|hosts|list|mount|purge] machine-name
+        launch  launch a new machine named 'machine-name'
+        start   [re]start machine named 'machine-name'
+        stop    stop machine named 'machine-name'
+        hosts   /etc/hosts style list of mDNS names and associated IPs
+        list    list all machines
+        mount   prints out a suggested mount command - doesn't actually _do_ anything.
+        purge   stop, delete, and purge named machine
+EOF
+}
+
+if [[ -z "${1}" ]]; then
+  show_help
+  exit 1
+fi
+subcommand="${1}"
+
+if [[ "$subcommand" != "list" ]] && [[ "$subcommand" != "hosts" ]]; then
+  shift
+  if [[ -z "${1}" ]]; then
+    show_help
+    exit 2
+  fi
+  vm_name="${1}"
+fi
+
+case "${subcommand}" in
+"launch")
+  multipass launch -n "${vm_name}" --cloud-init cloud-init.yml
+  rc=$?
+  ;;
+"hosts")
+  multipass list --format=json | jq -r '.list[] | "\(.ipv4[0]) \(.name).local"'
+  rc=$?
+  ;;
+"list")
+  multipass list --format=json | jq
+  rc=$?
+  ;;
+"start")
+  multipass start "${vm_name}"
+  rc=$?
+  ;;
+"stop")
+  multipass stop "${vm_name}"
+  rc=$?
+  ;;
+"mount")
+  uid=$(id -u)
+  gid=$(id -g)
+  mp_uid="1000"
+  mp_gid="1000"
+  echo "multipass mount --uid-map ${uid}:${mp_uid} --gid-map ${gid}:${mp_gid} /host/path ${vm_name}:/instance/path"
+  rc=$?
+  ;;
+"purge")
+  multipass delete "${vm_name}" --purge
+  rc=$?
+  ;;
+*)
+  show_help
+  exit 3
+  ;;
+esac
+exit "${rc}"

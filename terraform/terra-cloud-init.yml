@@ -1,0 +1,7 @@
+packages:
+  - avahi-daemon
+write_files:
+  - content: |
+         set -o vi
+    path: /etc/skel/.bashrc
+    append: true

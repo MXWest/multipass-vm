@@ -1,0 +1,29 @@
+---
+users:
+  - default
+  - name: ubuntu
+    gecos: Ubuntu
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    shell: /bin/bash
+    ssh_import_id: None
+    lock_passwd: true
+    ssh_authorized_keys:
+      - <<<Your Key Goes Here>>>
+package_update: true
+package_upgrade: true
+packages:
+  - avahi-daemon  # Enable mDNS, so we can access this machine as "machine-name.local"
+  - git
+  - httpie
+  - jq
+  - yamllint
+runcmd:
+  - [sh, -c, snap install multipass-sshfs]
+  - [sh, -c, wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_arm64]
+  - [sh, -c, chmod +x /usr/local/bin/yq]
+write_files:
+  - content: |
+         set -o vi
+    path: /etc/skel/.bashrc
+    append: true
