@@ -1,7 +1,7 @@
 # multipass-mvm
 Local cloud-ish type environments with [Canonical's `multipass`](https://multipass.run/). This is intended as an academic exercise.
 
-# Pre-requisites
+### Pre-requisites
 * [`multipass`](https://multipass.run/install) 
 * [`jq`](https://stedolan.github.io/jq/download/)
 
