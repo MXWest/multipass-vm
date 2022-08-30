@@ -23,7 +23,7 @@ multipass_instance_name = "sample"
 ### Access the instance
 
 **Note**: Notice that we are _not_ using `ssh` from the CLI here. This is because our sample `terra-cloud-init.yml`
-does not set up any user keys. Doing so This so is left as an exercise to the reader.
+does not set up any user keys. Doing so is left as an exercise to the reader.
 
 ```bash
 $ multipass shell $(terraform output -raw multipass_instance_name)
