@@ -62,6 +62,6 @@ $ mvm list
 ```
 
 ## Acknowledgements
-* [Using Multipass with cloud-init](https://medium.com/@ahmadb/using-multipass-with-cloud-init-bc4b92ad27d9) by Ahmad Bilal
+* [Canonical `multipass` Docs](https://multipass.run/)
 * [cloud-init Documentation](https://cloudinit.readthedocs.io/en/latest/)
-* [Canonical `multipass`](https://multipass.run/)
+* [Using Multipass with cloud-init](https://medium.com/@ahmadb/using-multipass-with-cloud-init-bc4b92ad27d9) by Ahmad Bilal
