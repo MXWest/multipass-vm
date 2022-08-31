@@ -35,5 +35,11 @@ Or, since you already know the name, we can be more terse 😊:
 $ multipass shell sample
 ```
 
+### Gotchas
+
+If you make out of band changes using `multipass` commands directly, you should expect some mild disorder. As is always the case with
+all things `terraform`ed.
+
 ## Acknowledgements
+
 * [terraform multipass provider](https://registry.terraform.io/providers/larstobi/multipass)
